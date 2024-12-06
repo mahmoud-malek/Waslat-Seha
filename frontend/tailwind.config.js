@@ -1,4 +1,3 @@
-// client/tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ["class"],
@@ -13,7 +12,11 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			colors: {},
+			colors: {
+				purple: {
+					6000: '#7e22ce', // Custom purple color
+				},
+			},
 			keyframes: {
 				'fade-in': {
 					'0%': { opacity: 0 },
@@ -28,6 +31,12 @@ export default {
 				'fade-in': 'fade-in 0.4s ease-out',
 				'rotate': 'rotate 3s linear infinite'
 			},
+			stroke: theme => ({
+				current: 'currentColor',
+				red: theme('colors.red.500'),
+				green: theme('colors.green.500'),
+				blue: theme('colors.blue.500'),
+			}),
 		},
 	},
-}
+};

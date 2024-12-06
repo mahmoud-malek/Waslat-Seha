@@ -1,8 +1,10 @@
 import React from 'react'
 import manDoctor from '../assets/doctor-photo.png'
 import girlDoctor from '../assets/girl_doctor.png'
+import Search from './Search'
 
-export default function HeroSection() {
+export default function HeroSection({onSearchClick}) {
+	
 return (
     <>
         <section className="relative w-full min-h-screen">
@@ -36,9 +38,9 @@ return (
 							قدمنالك الذكاء الاصطناعي اللي هيساعدك في حجز مع انسب الدكاترة لحالتك
                         </p>
                         <div className="flex items-center gap-4 mt-8 flex-col sm:flex-row sm:w-max sm:mx-auto lg:mx-0">
-                            <a href="#" className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                            <button onClick={onSearchClick} className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
                                 <span className="relative text-white"> احجز الان</span>
-                            </a>
+                            </button>
                             <a href="#" className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-emerald-500/5 dark:before:bg-emerald-500/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
                                 <span className="relative text-cyan-500 flex items-center gap-x-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 animate-pulse">
