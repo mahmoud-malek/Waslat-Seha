@@ -12,7 +12,7 @@ export default function Home() {
         // Scroll to the Search component
         searchRef.current?.scrollIntoView({ behavior: "smooth" });
     };
-
+	// importing all components that are displayed in the home in order to display them
     return (
         <>
             <Navbar />
@@ -21,6 +21,7 @@ export default function Home() {
             <Search />
 			</div>
 			<Features />
+			<Footer />
         </>
     );
 }

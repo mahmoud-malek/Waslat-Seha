@@ -50,13 +50,14 @@ html.dark .gradient-two {
   padding-right: 1.25rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 2.5rem;
 }
 
 .features-header {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1.25rem;
   direction: rtl;
 }

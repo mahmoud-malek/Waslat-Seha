@@ -1,8 +1,8 @@
 import React from 'react'
 import manDoctor from '../assets/doctor-photo.png'
 import girlDoctor from '../assets/girl_doctor.png'
-import Search from './Search'
 
+// i use tailwind css that's sytles are written in the same file
 export default function HeroSection({onSearchClick}) {
 	
 return (

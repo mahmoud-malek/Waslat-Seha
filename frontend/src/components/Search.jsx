@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import aiIcon from "../assets/ai.svg";
 import searchIcon from "../assets/search-document.svg";
 
-// Data for the search options
+// Data for the search options dummy data
 const specialties = ["طبيب عام", "أسنان", "نفسي", "جلدية", "عظام", "عيون"];
 const cities = [{ id: 1, name: "القاهرة", areas: ["المعادي", "التجمع الخامس", "المهندسين"] }
 	, { id: 2, name: "الجيزة", areas: ["الهرم", "الدقي", "العجوزة"] }
