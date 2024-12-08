@@ -1,9 +1,9 @@
 import React from 'react';
 import './Features.css'; // Import the regular CSS
-import managementIcon from '../assets/features-icons/management-innovation-learn.svg'
-import doctorIcon from '../assets/features-icons/male-doctor-to-guide.svg'
-import aiIcon from '../assets/features-icons/artificial-intelligenceai.svg'
-import controlIcon from '../assets/features-icons/interface-control.svg'
+import managementIcon from '../assets/features-icons/management-innovation-learn.svg';
+import doctorIcon from '../assets/features-icons/male-doctor-to-guide.svg';
+import aiIcon from '../assets/features-icons/artificial-intelligenceai.svg';
+import controlIcon from '../assets/features-icons/interface-control.svg';
 
 const ServiceCard = ({ title, description, icon }) => {
   return (
@@ -24,50 +24,48 @@ const ServiceCard = ({ title, description, icon }) => {
 const services = [
   {
     id: 1,
-    title: "الذكاء الاصطناعي",
-    description: "نقدم خدمة الذكاء الاصطناعي لمساعدة المريض في تحديد أفضل وانسب تخصص وتقديم الارشادات الطبية",
-    icon: aiIcon
+    title: "Artificial Intelligence",
+    description: "We provide AI services to help patients determine the best specialty and offer medical guidance.",
+    icon: aiIcon,
   },
   {
     id: 2,
-    title: "أفضل الأطباء",
-    description: "يوجد لدينا أفضل الأطباء المتخصصين في مختلف التخصصات الطبية ",
-    icon: doctorIcon
+    title: "Top Doctors",
+    description: "We have the best specialized doctors across various medical fields.",
+    icon: doctorIcon,
   },
   {
     id: 3,
-    title: "إدارة المواعيد",
-    description: "امكانية حجز موعد مع الطبيب المفضل لديك بكل سهولة",
-    icon: managementIcon
+    title: "Appointment Management",
+    description: "Easily book an appointment with your preferred doctor.",
+    icon: managementIcon,
   },
   {
     id: 4,
-    title: "لوحة تحكم سهلة ",
-    description: "تمكنك لوحة التحكم من متابعة حالاتك الطبية والمواعيد المحددة",
-    icon: controlIcon
+    title: "User-Friendly Dashboard",
+    description: "The dashboard allows you to track your medical cases and scheduled appointments.",
+    icon: controlIcon,
   },
 ];
 
 const Features = () => {
   return (
-	  <section className="features-section">
-		  <div class="gradient-box gradient-one"></div>
-			<div class="gradient-box gradient-two"></div>
+    <section className="features-section">
+      <div className="gradient-box gradient-one"></div>
+      <div className="gradient-box gradient-two"></div>
 
-		  <div className="features-container">
-			
+      <div className="features-container">
         <div className="features-header">
-			
-          <span className="features-header-title">
-            الخدمات
-          </span>
-          <h2 className="features-header-title">أحنا بنساعدك عن طريق توفير أفضل الخدمات والتكنولوجيا الحديثة</h2>
+          <span className="features-header-title">Our Services</span>
+          <h2 className="features-header-title">
+            We help you by providing the best services and modern technology.
+          </h2>
           <p className="features-header-subtitle">
-            العديد من المميزات لكل من المريض والطبيب لتسهيل العملية الطبية وتحسين الخدمات الطبية
+            Many features for both patients and doctors to streamline the medical process and improve services.
           </p>
         </div>
         <div className="features-grid">
-          {services.map(service => (
+          {services.map((service) => (
             <ServiceCard key={service.id} {...service} />
           ))}
         </div>
