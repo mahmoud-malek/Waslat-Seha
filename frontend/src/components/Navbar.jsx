@@ -89,8 +89,8 @@ const navItems = [
 ];
 
 
-const Navbar = () => {
-  const [openNavbar, setOpenNavbar] = useState(false);
+export default function Navbar () {
+  const [openNavbar, setOpenNavbar] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ const Navbar = () => {
       } />
 
       {/* Header Container */}
-      <header className="absolute inset-x-0 top-0 h-20 flex items-center z-50">
+      <header className="h-20 flex items-center z-50">
         <div className="mx-auto lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 relative z-50">
           {/* Navigation bar */}
           <nav className="flex items-center justify-between w-full relative">
@@ -146,15 +146,15 @@ const Navbar = () => {
             `}>
               {/* Navigation Links */}
               <ul className="text-gray-700 dark:text-gray-100 w-full flex lg:items-center gap-y-4 lg:gap-x-8 flex-col lg:flex-row lg:w-full lg:justify-center">
-  {navItems.map(navItem => (
-    <li key={navItem.id}>
-      <a href={navItem.link} className="flex items-center gap-2 transition hover:text-cyan-500 ease-linear text-lg font-bold">
-        {navItem.icon}
-        {navItem.text}
-      </a>
-    </li>
-  ))}
-</ul>
+					{navItems.map(navItem => (
+						<li key={navItem.id}>
+						<a href={navItem.link} className="flex items-center gap-2 transition hover:text-cyan-500 ease-linear text-lg font-bold">
+							{navItem.icon}
+							{navItem.text}
+						</a>
+						</li>
+					))}
+				</ul>
 
               {/* Auth Buttons */}
               <div className="lg:min-w-max flex flex-col lg:flex-row lg:items-center gap-4 mt-8 lg:mt-0 w-full sm:w-max">
@@ -184,7 +184,7 @@ const Navbar = () => {
               <button onClick={() => { toggleNavbar() }} aria-label='toggle navbar' className="outline-none lg:hidden w-7 h-auto flex flex-col relative children:flex">
                 <span aria-hidden="true" className={`
                   w-6 origin-right h-0.5 rounded-full bg-gray-700 dark:bg-gray-200 transition-all duration-300 ease-linear
-                  ${openNavbar ? "-rotate-[40deg] -translate-y-[0.375rem] scale-x-100" : " scale-x-75"}
+                  ${openNavbar ? "-rotate-[60deg] -translate-y-[0.300rem] scale-x-100" : " scale-x-75"}
                 `} />
                 <span aria-hidden="true" className={`
                   w-6 origin-center mt-1 h-0.5 rounded-full bg-gray-700 dark:bg-gray-200 transition-all duration-300 ease-linear
@@ -192,7 +192,7 @@ const Navbar = () => {
                 `} />
                 <span aria-hidden="true" className={`
                   w-6 origin-right mt-1 h-0.5 rounded-full bg-gray-700 dark:bg-gray-200 transition-all duration-300 ease-linear
-                  ${openNavbar ? "rotate-[40deg] translate-y-[0.375rem] scale-x-100" : " scale-x-75"}
+                  ${openNavbar ? "rotate-[60deg] translate-y-[0.300rem] scale-x-100" : " scale-x-75"}
                 `} />
               </button>
             </div>
@@ -203,4 +203,3 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;

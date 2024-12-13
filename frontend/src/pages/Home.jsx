@@ -5,6 +5,8 @@ import Search from "../components/Search";
 import Features from "../components/Features";
 import Footer from "../components/Footer";
 
+
+
 export default function Home() {
     const searchRef = useRef(null); // Create a ref for Search
 

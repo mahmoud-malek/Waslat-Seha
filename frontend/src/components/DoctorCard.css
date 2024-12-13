@@ -1,0 +1,152 @@
+/* General styles for the doctor card */
+
+.doctor-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 300px;
+  border-radius: 100px;
+  margin: 10px;
+  padding: 1rem;
+
+  position: relative;
+  background-color: #f3f4f6;
+  box-shadow: 0 4px 8px rgba(201, 149, 149, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for the doctor card */
+.doctor-card:hover {
+  transform: translateY(-10px);
+}
+
+.doctor-card::after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 101%;
+  height: 101%;
+  background: linear-gradient(to right, #1cc4f3, #18d7a8);
+  border-radius: 100px;
+  z-index: -1;
+}
+
+/* Styles for doctor card content */
+.doctor-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.doctor-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.doctor-card p {
+  color: #4b5563;
+}
+
+.doctor-card-actions {
+  display: flex;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* General button styles */
+.doctor-card button {
+  position: relative; /* Required for pseudo-element */
+  
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  background-color: rgb(35, 197, 186);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+
+/* Pseudo-element for the animated border */
+.doctor-card button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-radius: 2rem; /* Match button's rounded corners */
+  box-sizing: border-box;
+ 
+  pointer-events: none; /* Prevent interactions */
+  clip-path: inset(100% 50% 100% 100%); /* Start hidden */
+  animation: none;
+}
+
+.doctor-card:hover .doctor-card-actions button {
+	  z-index: 2; /* Ensure button is above pseudo-element */
+	  background-color: transparent;
+
+}
+
+/* Active button scaling effect */
+.doctor-card:hover .doctor-card-actions button:active {
+  transform: scale(0.9);
+}
+
+/* Button hover effect */
+.doctor-card:hover .doctor-card-actions button:hover {
+   background: none;
+  background-color: #0bc4a8;
+}
+
+/* Trigger animation on hover */
+.doctor-card:hover .doctor-card-actions button::after {
+  border-color: #ffffff; /* Visible border */
+   background: none;
+  animation: progress-border 0.8s steps(20) forwards;
+}
+
+/* Keyframes for progress-bar-like border */
+@keyframes progress-border {
+  0% {
+    clip-path: inset(100% 20% 100% 100%); /* Start at top */
+  }
+  25% {
+    clip-path: inset(20% 0 100% 100%); /* Top border complete */
+  }
+  50% {
+    clip-path: inset(0 0 100% 15%); /* Right border complete */
+  }
+  100% {
+    clip-path: inset(0 0 0 0); /* Left border complete */
+  }
+}
+
+
+/* Dark mode styles */
+
+/* Dark mode doctor card */
+html.dark .doctor-card {
+  background-color: #111827;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #f9fafb;
+}
+
+/* Dark mode doctor card content */
+html.dark .doctor-card h3 {
+  color: #f9fafb;
+}
+
+html.dark .doctor-card p {
+  color: #d1d5db;
+}
+
+html.dark .doctor-card-actions button {
+    background: linear-gradient(to right, #1cc4f3, #18d7a8);
+}
+
