@@ -5,7 +5,7 @@ const navItems = [
   {
     id: 1,
     text: "Home",
-    link: "#",
+    link: "/",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@ const navItems = [
   {
     id: 2,
     text: "How to Use",
-    link: "#",
+    link: "/how-to-use",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ const navItems = [
 
 
 export default function Navbar () {
-  const [openNavbar, setOpenNavbar] = useState(true);
+  const [openNavbar, setOpenNavbar] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
@@ -158,10 +158,10 @@ export default function Navbar () {
 
               {/* Auth Buttons */}
               <div className="lg:min-w-max flex flex-col lg:flex-row lg:items-center gap-4 mt-8 lg:mt-0 w-full sm:w-max">
-                <a href="#" className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3]/5 dark:before:bg-[#1ad6bd]/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                <a href="/login" className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3]/5 dark:before:bg-[#1ad6bd]/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
                   <span className="relative text-[#3FD3D3] font-bold">Login</span>
                 </a>
-                <a href="#" className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                <a href="signup" className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
                   <span className="relative text-white font-bold">Join</span>
                 </a>
               </div>

@@ -1,70 +1,82 @@
-.search-filter {
-	display: flex;
-	flex-direction: column;
-	margin-left: 2rem;
-}
-.search-filter-container {
-	display: flex;
-	flex-direction: column;
-	/* border: 1px solid red; */
-	border: 2px solid #06ccbf;
-	border-radius: 0.5rem;
-}
-
-.search-filter-item {
-	display: flex;
-	flex-direction: column;	
-	margin: 0.5rem;
+.modal-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
 }
 
-.search-filter-item label {
-	font-size: 1.5rem;
-	font-weight: 600;
-	color: #1f2937;
-	padding: 0.5rem;
+.modal-content {
+  display: flex;
+  background: white;
+  opacity: 90%;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  height: 90%;
 }
 
-.search-filter-item select {
-	font-size: 1rem;
-	font-weight: 700;
-	color: #1f2937;
-	padding: 0.5rem;
-	border: 2px solid #1bd1ce;
-	border-radius: 0.5rem;
-}
-
-.search-filter-item select:hover {
-	border-color: #1cf3d3;
-}
-
-
-.search-filter-item input {
-	font-size: 1rem;
-	font-weight: 700;
-	color: #1f2937;
-	padding: 0.5rem;
-	border: 2px solid #1bd1ce;
-	border-radius: 0.5rem;
-}
-
-/* General button styles */
-.search-filter-item button {
-  position: relative; /* Required for pseudo-element */
-  
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  background-color: rgb(35, 197, 186);
-  color: white;
-  font-weight: 700;
+.modal-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
   cursor: pointer;
 }
 
-.search-filter-item button:hover {
-	background-color: #13ecda;
+.search-filter-container {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 15px;
+  margin-right: 15px;
+  width: 100%;
+}
+
+.search-filter-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.search-filter-item label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.search-filter-item input {
+	  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
 
-/* for mobile */
-.search-filter-mobile {
-	display: flex;
+.search-filter-item select {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.search-filter-item button {
+  margin-top: 5px;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #07ffe2 0%, #088a98 100%);
+  color: white;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
