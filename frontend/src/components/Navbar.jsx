@@ -68,7 +68,7 @@ const navItems = [
   {
     id: 4,
     text: "About Us",
-    link: "#",
+    link: "/about-us",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
