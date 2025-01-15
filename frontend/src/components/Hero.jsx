@@ -93,12 +93,12 @@ export default function HeroSection({ onSearchClick }) {
                 <span className="pl-2 text-gray-600 dark:text-gray-200">Doctors</span>
               </div>
             </div>
-            <div className="lg:h-full hidden md:flex">
+            <div className="lg:h-full max-sm:hidden">
               <div className="flex w-full h-96 min-h-[24rem] lg:min-h-[none] lg:w-full lg:h-full items-center relative">
                 <div className="absolute z-0 top-1/2 -translate-y-1/2 w-5/6 right-0 h-[calc(80%+20px)] bg-gradient-to-tr opacity-25 from-emerald-500 to-pink-300 dark:from-[#570cac] dark:to-emerald-500 blur-2xl"></div>
                 <div className="absolute w-3/5 h-full z-10 p-1 -translate-y-1/2 top-1/2 right-3 rounded-3xl bg-transpernt dark:bg-gray-950 dark:bg-opacity-50 shadow-lg shadow-gray-100 dark:shadow-transparent border border-gray-200 dark:border-gray-800">
                   <img
-                    src={girlDoctor}
+                    src={manDoctor}
                     alt="In studio"
                     width={500}
                     height="auto"
@@ -108,7 +108,7 @@ export default function HeroSection({ onSearchClick }) {
                 </div>
                 <div className="absolute -translate-y-1/2 top-1/2 h-[calc(80%-2rem)] w-[calc(40%-20px)] p-1 rounded-3xl bg-cyan-200 bg-opacity-10 dark:bg-gray-950 dark:bg-opacity-50 shadow-lg shadow-gray-100 dark:shadow-transparent border border-gray-200 dark:border-gray-800">
                   <img
-                    src={manDoctor}
+                    src={girlDoctor}
                     alt="Happy in studio"
                     width={200}
                     height="auto"

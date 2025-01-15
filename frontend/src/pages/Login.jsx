@@ -2,11 +2,11 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const SignInPage = () => {
+export default function SignInPage () {
 	return (
 		<>
-		<Navbar />	
-    <div className="flex items-center justify-center min-h-screen">
+	<Navbar />	
+    <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-screen-md p-6 m-5 bg-gray-800 rounded-2xl shadow-2xl">
         <h2 className="text-3xl font-extrabold text-center text-white">Sign in</h2>
         <p className="mt-2 text-sm text-center text-gray-400">Welcome, please sign in to continue</p>
@@ -65,9 +65,8 @@ const SignInPage = () => {
                 className="w-full  px-4 py-2 text-sm font-medium text-white bg-cyan-500 rounded-full hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2"
 				>
                 Sign in as Doctor
-								</button>
-								
-							</div>
+			  </button>		
+			</div>
           </form>
         </div>
       </div>
@@ -77,4 +76,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+

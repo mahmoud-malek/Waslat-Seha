@@ -4,7 +4,7 @@ import './AboutUs.css'
 import Doctor from '../assets/doctor-photo.png'
 import Footer from '../components/Footer'
 import Doctors from '../assets/doctors.jpg'
-
+import GPS from '../components/GPS'
 
 export default function AboutUs () {
     return (
@@ -42,7 +42,8 @@ export default function AboutUs () {
                 </section>
                 
             </div>
-            <Footer />
+			<Footer />
+			<GPS />
         </>
     )            
 }

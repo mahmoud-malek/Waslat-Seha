@@ -98,6 +98,8 @@ export default function Results() {
       </div>
       <SearchDoctor />
       <Footer />
+
+		  
       <SearchFilter show={showFilters} onClose={toggleFilters} />
     </>
   );
