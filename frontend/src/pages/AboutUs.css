@@ -1,77 +1,91 @@
-
-.AboutUs{
-    
+.AboutUs {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    vertical-align: middle;
-    margin-left: 4rem;
-
-    color: cadetblue;
-    height: auto;
-
+    gap: 4rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.AboutUs section{
-    
+.AboutUs section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    vertical-align: middle;
-    margin-left: 4rem;
-
-    color: cadetblue;
-    height: auto;
-    text-transform:capitalize;
-
+    gap: 4rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-.AboutUs .section2{
-    
-    display: flex;
+.AboutUs section:hover {
+    transform: translateY(-5px);
+}
+
+.AboutUs .section2 {
     flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-    vertical-align: middle;
-    margin-left: 4rem;
-    vertical-align: middle;
-    text-transform:capitalize;
-    
+    background: linear-gradient(to right, rgba(63, 211, 211, 0.1), transparent);
+}
 
+.AboutUs .section2 div p {
+	color: black;
+}
 
-    color: cadetblue;
-    height: auto;
-
+html.dark .AboutUs .section2 div p {
+	color: white;
 }
 
 .AboutUs h1 {
-    font-size: 5rem;
+    font-size: 3rem;
+    color: #3FD3D3;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
 }
-.AboutUs p {
-    font-size: 1.5rem;
-    color:black;
-    
 
+.AboutUs p {
+    font-size: 1.1rem;
+    color: #d9d9d9;
+    line-height: 1.6;
+    margin-bottom: 1rem;
 }
 
 .AboutUs img {
-    margin-top: 10rem;
+    max-width: 500px;
+    height: auto;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .AboutUs section {
+        background: rgba(17, 24, 39, 0.8);
+    }
     
-   
-}
-.section2 img {
-   margin-right: 4rem;
-}
-
-.section2 div {
-	margin-right: 4rem;
-}
-
-
-
-
-
-
+    .AboutUs .section2 {
+        background: linear-gradient(to right, rgba(63, 211, 211, 0.05), transparent);
+    }
     
-                        
+    .AboutUs p {
+        color: #E5E7EB;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .AboutUs section,
+    .AboutUs .section2 {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .AboutUs h1 {
+        font-size: 2rem;
+    }
+
+    .AboutUs img {
+        max-width: 100%;
+    }
+}

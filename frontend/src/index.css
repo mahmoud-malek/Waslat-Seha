@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+	.text-gradient {
+		@apply text-transparent bg-clip-text bg-gradient-to-br from-cyan-700 to-cyan-700 p-3
+	}
+
+	.list-item {
+		@apply shadow-md rounded-full m-1 p-1 cursor-pointer hover:shadow-lg 
+		 hover:bg-sky-500 hover:scale-105 transition-all duration-200 ease-in-out
+	}
+}
