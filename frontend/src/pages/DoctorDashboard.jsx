@@ -1,13 +1,20 @@
-// src/pages/DoctorDashboard.jsx
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "../../utils/axiosConfig";
 
 export default function DoctorDashboard() {
     const [activeTab, setActiveTab] = useState('overview');
     const [editingSchedule, setEditingSchedule] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [doctor, setDoctor] = useState({
+        name: "Dr. John Doe",
+        specialty: "Cardiologist",
+        location: "Cairo Medical Center",
+        image: null // Replace with actual image URL if available
+    });
 
     // Mock data - replace with actual API data
     const appointments = [
@@ -41,6 +48,28 @@ export default function DoctorDashboard() {
         toast.success('Schedule updated successfully');
     };
 
+    const handleFileChange = (e) => {
+        setProfilePicture(e.target.files[0]);
+    };
+
+    const handleProfilePictureUpload = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("profilePicture", profilePicture);
+
+        try {
+            const response = await axios.post("/api/doctors/profile-picture", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            setDoctor({ ...doctor, image: response.data.profileImage });
+            toast.success("Profile picture updated successfully!");
+        } catch (error) {
+            toast.error("Failed to update profile picture.");
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -50,16 +79,38 @@ export default function DoctorDashboard() {
                     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
                         <div className="flex items-center gap-6">
                             <div className="w-24 h-24 rounded-full bg-cyan-100 dark:bg-cyan-900 flex items-center justify-center">
-                                <svg className="w-12 h-12 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
+                                {doctor.image ? (
+                                    <img src={doctor.image} alt={doctor.name} className="w-24 h-24 rounded-full object-cover" />
+                                ) : (
+                                    <svg className="w-12 h-12 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                )}
                             </div>
                             <div>
-                                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dr. John Doe</h1>
-                                <p className="text-cyan-600 dark:text-cyan-400">Cardiologist</p>
-                                <p className="text-gray-600 dark:text-gray-300">Cairo Medical Center</p>
+                                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{doctor.name}</h1>
+                                <p className="text-cyan-600 dark:text-cyan-400">{doctor.specialty}</p>
+                                <p className="text-gray-600 dark:text-gray-300">{doctor.location}</p>
                             </div>
                         </div>
+                        <form onSubmit={handleProfilePictureUpload} className="mt-4">
+                            <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Change Profile Picture
+                            </label>
+                            <input
+                                type="file"
+                                id="profilePicture"
+                                name="profilePicture"
+                                onChange={handleFileChange}
+                                className="mt-1 block w-full"
+                            />
+                            <button
+                                type="submit"
+                                className="mt-2 px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-600"
+                            >
+                                Upload
+                            </button>
+                        </form>
                     </div>
 
                     {/* Navigation Tabs */}

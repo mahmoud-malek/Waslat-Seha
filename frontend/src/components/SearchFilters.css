@@ -1,5 +1,4 @@
 .modal-overlay {
-  display: flex;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,70 +12,117 @@
 }
 
 .modal-content {
-  display: flex;
   background: white;
-  opacity: 90%;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 2rem;
+  border-radius: 1rem;
   position: relative;
   width: 90%;
   max-width: 500px;
-  height: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-close {
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: 1rem;
+  right: 1rem;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
+  padding: 0.5rem;
 }
 
 .search-filter-container {
   display: flex;
   flex-direction: column;
-
-  margin-top: 15px;
-  margin-right: 15px;
-  width: 100%;
+  gap: 1.5rem;
 }
 
 .search-filter-item {
   display: flex;
   flex-direction: column;
-  margin-bottom: 5px;
+  gap: 0.5rem;
 }
 
 .search-filter-item label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
+.search-filter-item select,
 .search-filter-item input {
-	  padding: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.2s;
 }
 
-
-.search-filter-item select {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 3px;
+.search-filter-item select:focus,
+.search-filter-item input:focus {
+  border-color: #3FD3D3;
+  box-shadow: 0 0 0 2px rgba(63, 211, 211, 0.2);
 }
 
-.search-filter-item button {
-  margin-top: 5px;
-  padding: 5px;
+.search-filter-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-button {
+  flex: 1;
+  padding: 0.75rem;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #07ffe2 0%, #088a98 100%);
-  color: white;
+  border-radius: 0.5rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
-.hidden {
-  display: none;
+.apply-button {
+  background: linear-gradient(90deg, #3FD3D3 0%, #2A9D8F 100%);
+  color: white;
+}
+
+.apply-button:hover {
+  opacity: 0.9;
+}
+
+.reset-button {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.reset-button:hover {
+  background: #cbd5e0;
+}
+
+@media (max-width: 640px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+/* Dark mode styles */
+.dark .modal-content {
+  background: #1a202c;
+  color: white;
+}
+
+.dark .search-filter-item select,
+.dark .search-filter-item input {
+  background: #2d3748;
+  border-color: #4a5568;
+  color: white;
+}
+
+.dark .reset-button {
+  background: #4a5568;
+  color: white;
+}
+
+.dark .reset-button:hover {
+  background: #2d3748;
 }

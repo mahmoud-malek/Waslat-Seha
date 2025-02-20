@@ -113,6 +113,15 @@ export default function Navbar () {
     localStorage.setItem('darkMode', !darkMode);
     setDarkMode(darkMode => !darkMode);
   };
+  
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    };
+    
+    const isLoggedIn = !!localStorage.getItem('token');
+    const userType = JSON.parse(localStorage.getItem('user'))?.role;
 
   return (
     <>
@@ -156,15 +165,31 @@ export default function Navbar () {
 					))}
 				</ul>
 
-              {/* Auth Buttons */}
-              <div className="lg:min-w-max flex flex-col lg:flex-row lg:items-center gap-4 mt-8 lg:mt-0 w-full sm:w-max">
-                <a href="/login" className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3]/5 dark:before:bg-[#1ad6bd]/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
-                  <span className="relative text-[#3FD3D3] font-bold">Login</span>
+            {/* Auth Buttons */}
+            <div className="lg:min-w-max flex flex-col lg:flex-row lg:items-center gap-4 mt-8 lg:mt-0 w-full sm:w-max">
+            {isLoggedIn ? (
+                <>
+                <a href={userType == "DOCTOR" ? "/doctor/dashboard" : "/patient/dashboard"} className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3]/10 dark:before:bg-[#1ad6bd]/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                    <span className="relative text-[#3FD3D3] font-bold">Dashboard</span>
                 </a>
-                <a href="signup" className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
-                  <span className="relative text-white font-bold">Join</span>
+                <button
+                onClick={handleLogout}
+                className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center dark:before:bg-[#27a5a3] before:bg-[#551212] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95"
+                >
+                <span className="relative text-white font-bold">Sign Out</span>
+                </button>
+                </>
+            ) : (
+                <>
+                 <a href="/login" className="px-7 relative text-emerald-500 h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3]/5 dark:before:bg-[#1ad6bd]/10 before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                    <span className="relative text-[#3FD3D3] font-bold">Login</span>
                 </a>
-              </div>
+                <a href="/signup" className="px-7 relative text-white h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+                    <span className="relative text-white font-bold">Join</span>
+                </a>
+                </>
+            )}
+            </div>
             </div>
 
             {/* Mobile Menu Button */}

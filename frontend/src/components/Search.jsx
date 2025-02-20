@@ -3,6 +3,7 @@ import aiIcon from "../assets/ai.svg";
 import searchIcon from "../assets/search-document.svg";
 import GPSIcon from "../assets/GPS.svg";
 import GPSIcon2 from "../assets/GPS2.svg";
+import { useNavigate } from "react-router-dom";
 
 // Data for the search options
 const specialties = ["General Practitioner", "Dentist", "Psychiatrist", "Dermatologist", "Orthopedic", "Ophthalmologist"];
@@ -13,12 +14,39 @@ const cities = [
 ];
 
 export default function SearchDoctor() {
+  const navigate = useNavigate();
   const [location, setLocation] = useState({
     city: "",
     state: "",
     village: "",
     suburb: "",
   });
+
+    const [searchData, setSearchData] = useState({
+    specialty: '',
+    doctorName: '',
+    });
+    
+  const handleSearch = () => {
+  const queryParams = new URLSearchParams();
+  
+  if (showTextField) {
+    // Handle AI search
+    const aiQuery = document.getElementById('ai-search').value;
+    if (aiQuery) {
+      queryParams.append('ai', aiQuery);
+    }
+  } else {
+    // Handle traditional search
+    if (searchData.specialty !== '') queryParams.append('specialty', searchData.specialty);
+    if (searchData.doctorName) queryParams.append('doctor', searchData.doctorName);
+    if (location.city) queryParams.append('city', location.city);
+    if (location.suburb) queryParams.append('area', location.suburb);
+  }
+  
+  navigate(`/results?${queryParams.toString()}`);
+};
+    
   const [error, setError] = useState("");
   const [showTextField, setShowTextField] = useState(false);
 
@@ -39,10 +67,9 @@ export default function SearchDoctor() {
 
           const data = await response.json();
           const { state = "", city = "", village = "", suburb = "" } = data.address || {};
-          setLocation({ state, city, village, suburb });
+            setLocation({ state, city, village, suburb });
           setError(""); // Clear error if successful
         } catch (err) {
-          console.error("Error fetching location details:", err);
           setError("Failed to fetch location details");
         }
       },
@@ -106,7 +133,10 @@ export default function SearchDoctor() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full focus:outline-none focus:ring focus:ring-[#3FD3D3]">
+                <select className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full focus:outline-none focus:ring focus:ring-[#3FD3D3]"
+                value={searchData.specialty}
+                onChange={(e) => setSearchData({...searchData, specialty: e.target.value})}
+                >
                   <option>Select Specialty</option>
                   {specialties.map((speciality) => (
                     <option key={speciality}>{speciality}</option>
@@ -149,6 +179,8 @@ export default function SearchDoctor() {
                 </select>
                 <input
                   type="text"
+                  value={searchData.doctorName}
+                  onChange={(e)=>setSearchData({...searchData, doctorName:e.target.value })  }
                   placeholder="Doctor or hospital name"
                   className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-full focus:outline-none focus:ring focus:ring-[#3FD3D3]"
                 />
@@ -172,7 +204,9 @@ export default function SearchDoctor() {
               onClick={getLocation}
               aria-label="Use GPS location"
             />
-            <button className="px-7 relative h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95">
+            <button className="px-7 relative h-12 flex w-full sm:w-max justify-center items-center before:bg-[#3FD3D3] before:absolute before:inset-0 before:rounded-full before:transition-transform before:ease-linear hover:before:scale-105 active:before:scale-95"
+            onClick={handleSearch}
+            >
               <span className="relative text-white font-bold">Search</span>
             </button>
           </div>

@@ -1,91 +1,146 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SearchFilters.css';
 
-export default function SearchFilter({ show, onClose }) {
-  if (!show) return null;
+export default function SearchFilter({ show, onClose, onApplyFilters }) {
+  const [filters, setFilters] = useState({
+    specialty: 'all',
+    location: 'all',
+    rating: 'all',
+    name: '',
+    price: 'all',
+    sort: 'rating',
+    order: 'asc'
+  });
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onApplyFilters(filters);
+    onClose();
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleReset = () => {
+    const defaultFilters = {
+      specialty: 'all',
+      location: 'all',
+      rating: 'all',
+      name: '',
+      price: 'all',
+      sort: 'rating',
+      order: 'asc'
+    };
+    setFilters(defaultFilters);
+    onApplyFilters(defaultFilters);
+  };
+
+  if (!show) return null;
+
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className="modal-content">
-        <button className="modal-close" onClick={onClose}>
-          &times;
-		</button>
-			  
-        <div className="search-filter-container">
-				<div className="search-filter-item">
-					<label htmlFor="specialty">Specialty</label>
-					<select name="specialty" id="specialty">
-					<option value="all">All</option>
-					<option value="cardiologist">Cardiologist</option>
-					<option value="pediatrician">Pediatrician</option>
-					<option value="dermatologist">Dermatologist</option>
-					<option value="gynecologist">Gynecologist</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="location">Location</label>
-					<select name="location" id="location">
-					<option value="all">All</option>
-					<option value="new-york">New York</option>
-					<option value="california">California</option>
-					<option value="florida">Florida</option>
-					<option value="texas">Texas</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="rating">Rating</label>
-					<select name="rating" id="rating">
-					<option value="all">All</option>
-					<option value="4">⭐️⭐️⭐️⭐️ & above</option>
-					<option value="3">⭐️⭐️⭐️ & above</option>
-					<option value="2">⭐️⭐️ & above</option>
-					<option value="1">⭐️ & above</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="name">Name</label>
-					<input type="text" name="name" id="name" placeholder="Search by name" />
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="price">Price</label>
-					<select name="price" id="price">
-					<option value="all">All</option>
-					<option value="100">$50 - $100</option>
-					<option value="200">$100 - $200</option>
-					<option value="300">$200 - $300</option>
-					<option value="400">$300 - $400</option>
-					<option value="500">$400 - $500</option>
-					<option value="+500">$500 & above</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="sort">Sort By</label>
-					<select name="sort" id="sort">
-					<option value="rating">Rating</option>
-					<option value="price">Price</option>
-					<option value="name">Name</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<label htmlFor="order">Order</label>
-					<select name="order" id="order">
-					<option value="asc">Ascending</option>
-					<option value="desc">Descending</option>
-					</select>
-				</div>
-				<div className="search-filter-item">
-					<button>Search</button>
-				</div>
-				<div className="search-filter-item">
-					<button>Reset</button>
-				</div>
-        </div>
+    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="modal-content dark:bg-gray-800">
+        <button className="modal-close dark:text-white" onClick={onClose}>&times;</button>
+        
+        <form onSubmit={handleSubmit} className="search-filter-container">
+          <div className="search-filter-item">
+            <label htmlFor="specialty" className="dark:text-white">Specialty</label>
+            <select 
+              name="specialty" 
+              id="specialty"
+              value={filters.specialty}
+              onChange={handleChange}
+              className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="all">All Specialties</option>
+              <option value="cardiologist">Cardiologist</option>
+              <option value="pediatrician">Pediatrician</option>
+              <option value="dermatologist">Dermatologist</option>
+              <option value="gynecologist">Gynecologist</option>
+              <option value="orthopedic">Orthopedic</option>
+              <option value="dentist">Dentist</option>
+			  <option value="Psychiatrist">Psychiatrist</option>
+            </select>
+          </div>
+
+          <div className="search-filter-item">
+            <label htmlFor="name" className="dark:text-white">Doctor Name</label>
+            <input 
+              type="text" 
+              name="name" 
+              id="name" 
+              value={filters.name}
+              onChange={handleChange}
+              placeholder="Search by name" 
+              className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            />
+          </div>
+
+          <div className="search-filter-item">
+            <label htmlFor="rating" className="dark:text-white">Rating</label>
+            <select 
+              name="rating" 
+              id="rating"
+              value={filters.rating}
+              onChange={handleChange}
+              className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="all">All Ratings</option>
+              <option value="4">⭐️⭐️⭐️⭐️ & above</option>
+              <option value="3">⭐️⭐️⭐️ & above</option>
+              <option value="2">⭐️⭐️ & above</option>
+            </select>
+          </div>
+
+          <div className="search-filter-item">
+            <label htmlFor="price" className="dark:text-white">Price Range</label>
+            <select 
+              name="price" 
+              id="price"
+              value={filters.price}
+              onChange={handleChange}
+              className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="all">All Prices</option>
+              <option value="100">Under $100</option>
+              <option value="200">$100 - $200</option>
+              <option value="300">$200 - $300</option>
+              <option value="301">Above $300</option>
+            </select>
+          </div>
+
+          <div className="search-filter-item">
+            <label htmlFor="sort" className="dark:text-white">Sort By</label>
+            <select 
+              name="sort" 
+              id="sort"
+              value={filters.sort}
+              onChange={handleChange}
+              className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+            >
+              <option value="rating">Rating</option>
+              <option value="price">Price</option>
+            </select>
+          </div>
+
+          <div className="search-filter-actions">
+            <button type="submit" className="filter-button apply-button">
+              Apply Filters
+            </button>
+            <button 
+              type="button"
+              onClick={handleReset}
+              className="filter-button reset-button"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
