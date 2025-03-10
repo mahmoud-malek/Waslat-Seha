@@ -8,71 +8,126 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  phoneNumber   String    @unique
-  email         String?   
-  password      String
-  role          Role      @default(PATIENT)
-  profileImage  String?   // URL or path to the stored image
-  profile       Profile?
-  appointments  Appointment[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  doctor        Doctor?
+  id             Int             @id @default(autoincrement())
+  phoneNumber    String          @unique
+  email          String?
+  password       String
+  role           Role            @default(PATIENT)
+  profileImage   String? // URL or path to the stored image
+  profile        Profile?
+  appointments   Appointment[]   @relation("PatientAppointments")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  doctor         Doctor?         @relation("DoctorUser")
+  medicalRecords MedicalRecord[] @relation("PatientRecords")
+
+  @@unique([email], map: "unique_email_when_present")
 }
 
 model Profile {
-  id          Int       @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  address     String?
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int       @unique
+  id        Int       @id @default(autoincrement())
+  firstName String
+  lastName  String
+  address   String?
+  gender    String?
+  bloodType String?
+  birthDate DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int       @unique
 }
 
 model Doctor {
-  id           Int           @id @default(autoincrement())
-  user         User          @relation(fields: [userId], references: [id])
-  userId       Int           @unique
-  speciality   String
-  experience   Int?
-  bio          String?
-  clinics      Clinic[]
-  availability Availability[]
-  appointments Appointment[]
+  id             Int             @id @default(autoincrement())
+  user           User            @relation("DoctorUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int             @unique
+  speciality     String
+  experience     Int?
+  bio            String?
+  rating         Float?          @default(0)
+  reviews        Review[]
+  clinics        Clinic[]        @relation("DoctorClinics")
+  availability   Availability[]
+  appointments   Appointment[]   @relation("DoctorAppointments")
+  medicalRecords MedicalRecord[] @relation("DoctorRecords")
 }
 
 model Clinic {
-  id           Int           @id @default(autoincrement())
-  doctor       Doctor        @relation(fields: [doctorId], references: [id])
-  doctorId     Int
+  id           Int            @id @default(autoincrement())
   name         String
   address      String
+  city         String
+  state        String?
+  country      String         @default("Egypt")
   price        Float
+  latitude     Float?
+  longitude    Float?
+  images       String[]
+  doctors      Doctor[]       @relation("DoctorClinics")
   availability Availability[]
+  appointments Appointment[]  @relation("ClinicAppointments")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
 model Availability {
-  id        Int       @id @default(autoincrement())
-  doctor    Doctor    @relation(fields: [doctorId], references: [id])
+  id        Int      @id @default(autoincrement())
+  doctor    Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   doctorId  Int
-  clinic    Clinic    @relation(fields: [clinicId], references: [id])
+  clinic    Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
   clinicId  Int
-  dayOfWeek Int       // 0-6 (Sunday-Saturday)
+  dayOfWeek Int // 0-6 (Sunday-Saturday)
   startTime DateTime
   endTime   DateTime
+  isActive  Boolean  @default(true)
+
+  @@unique([doctorId, clinicId, dayOfWeek])
 }
 
 model Appointment {
-  id          Int       @id @default(autoincrement())
-  patient     User      @relation(fields: [patientId], references: [id])
-  patientId   Int
-  doctor      Doctor    @relation(fields: [doctorId], references: [id])
-  doctorId    Int
-  datetime    DateTime
-  status      AppointmentStatus @default(PENDING)
-  notes       String?
-  createdAt   DateTime  @default(now())
+  id        Int               @id @default(autoincrement())
+  patient   User              @relation("PatientAppointments", fields: [patientId], references: [id], onDelete: Cascade)
+  patientId Int
+  doctor    Doctor            @relation("DoctorAppointments", fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId  Int
+  clinic    Clinic            @relation("ClinicAppointments", fields: [clinicId], references: [id], onDelete: Cascade)
+  clinicId  Int
+  datetime  DateTime
+  status    AppointmentStatus @default(PENDING)
+  notes     String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@index([patientId, status])
+  @@index([doctorId, status])
+  @@index([datetime])
+}
+
+model MedicalRecord {
+  id           Int      @id @default(autoincrement())
+  patient      User     @relation("PatientRecords", fields: [patientId], references: [id], onDelete: Cascade)
+  patientId    Int
+  doctor       Doctor   @relation("DoctorRecords", fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId     Int
+  diagnosis    String
+  notes        String?
+  prescription String?
+  attachments  String[]
+  date         DateTime @default(now())
+
+  @@index([patientId])
+  @@index([doctorId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  comment   String?
+  doctor    Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  doctorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([doctorId])
 }
 
 enum Role {

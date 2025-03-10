@@ -17,3 +17,4 @@ router.get('/', doctorController.getAllDoctors);
 
 
 export default router;
+

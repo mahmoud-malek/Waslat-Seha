@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { validateEmail, validatePhoneNumber } from "../utils/validators.js";
 import { generateToken } from "../config/jwt.js";
+import bycrypt from 'bcrypt'
 
 const prisma = new PrismaClient();
 
@@ -100,7 +101,7 @@ export const userController = {
 			}
 
 			// Hash password
-			const hashedPassword = await hashPassword(password);
+			const hashedPassword = bycrypt.hash(password);
 
 			// Create user with profile
 			const user = await prisma.user.create({
@@ -165,20 +166,26 @@ export const userController = {
 		}
 	},
 
-	// Update profile
 	async updateProfile(req, res) {
-		const { id } = req.params;
-		const { firstName, lastName, address } = req.body;
-
 		try {
+			const userId = req.user.id; // Get ID from authenticated user
+			const { firstName, lastName, email, phoneNumber, gender, bloodType, birthDate, address } = req.body;
+
 			const updatedUser = await prisma.user.update({
-				where: { id: parseInt(id) },
+				where: {
+					id: userId
+				},
 				data: {
+					email,
+					phoneNumber,
 					profile: {
 						update: {
 							firstName,
 							lastName,
-							address
+							address,
+							gender,
+							bloodType,
+							birthDate: birthDate ? new Date(birthDate) : undefined
 						}
 					}
 				},
@@ -187,9 +194,12 @@ export const userController = {
 				}
 			});
 
-			res.json(updatedUser);
+			// Remove sensitive data
+			const { password, ...userWithoutPassword } = updatedUser;
+			res.json(userWithoutPassword);
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			console.error('Profile update error:', error);
+			res.status(500).json({ error: 'Failed to update profile' });
 		}
 	},
 
@@ -208,18 +218,17 @@ export const userController = {
 		}
 	},
 
-	// udpate profile picture
 	async updateProfilePicture(req, res) {
 		try {
 			if (!req.file) {
 				return res.status(400).json({ error: 'No file uploaded' });
 			}
 
-			const { id } = req.user;
+			const userId = req.user.id;
 			const profileImagePath = `/uploads/profiles/${req.file.filename}`;
 
 			const updatedUser = await prisma.user.update({
-				where: { id: parseInt(id) },
+				where: { id: userId },
 				data: {
 					profileImage: profileImagePath
 				},
@@ -228,12 +237,20 @@ export const userController = {
 				}
 			});
 
-			res.json(updatedUser);
+			// Remove sensitive data
+			const { password, ...userWithoutPassword } = updatedUser;
+
+			res.json({
+				success: true,
+				profileImage: profileImagePath,
+				user: userWithoutPassword
+			});
 		} catch (error) {
-			res.status(500).json({ error: error.message });
+			console.error('Profile picture upload error:', error);
+			res.status(500).json({ error: 'Failed to update profile picture' });
 		}
 	},
-
+	
 	async getProfilePicture(req, res) {
 		try {
 			const { id } = req.params;
@@ -250,5 +267,107 @@ export const userController = {
 		} catch (error) {
 			res.status(500).json({ error: error.message });
 		}
+	},
+	async getUserProfile(req, res) {
+		try {
+			const userId = req.user.id;
+			const user = await prisma.user.findUnique({
+				where: { id: userId },
+				include: {
+					profile: true,
+					appointments: {
+						include: {
+							doctor: {
+								include: {
+									user: {
+										select: {
+											profile: true
+										}
+									}
+								}
+							},
+							clinic: true
+						},
+						orderBy: {
+							datetime: 'desc'
+						}
+					}
+				}
+			});
+
+			if (!user) {
+				return res.status(404).json({ error: "User not found" });
+			}
+
+			const { password, ...userWithoutPassword } = user;
+			res.json(userWithoutPassword);
+		} catch (error) {
+			console.error('Profile fetch error:', error);
+			res.status(500).json({ error: "Failed to fetch user profile" });
+		}
+	},
+
+	async getAppointments(req, res) {
+		try {
+			const userId = req.user.id;
+			const appointments = await prisma.appointment.findMany({
+				where: {
+					patientId: userId,
+					status: {
+						not: 'CANCELLED'
+					}
+				},
+				include: {
+					doctor: {
+						include: {
+							user: {
+								select: {
+									profile: true
+								}
+							}
+						}
+					},
+					clinic: true
+				},
+				orderBy: {
+					datetime: 'desc'
+				}
+			});
+
+			res.json(appointments);
+		} catch (error) {
+			console.error('Appointments fetch error:', error);
+			res.status(500).json({ error: "Failed to fetch appointments" });
+		}
+	},
+
+	async getMedicalHistory(req, res) {
+		try {
+			const userId = req.user.id;
+			const medicalHistory = await prisma.medicalRecord.findMany({
+				where: { patientId: userId },
+				include: {
+					doctor: {
+						include: {
+							user: {
+								select: {
+									profile: true
+								}
+							}
+						}
+					}
+				},
+				orderBy: {
+					date: 'desc'
+				}
+			});
+
+			res.json(medicalHistory);
+		} catch (error) {
+			console.error('Medical history fetch error:', error);
+			res.status(500).json({ error: "Failed to fetch medical history" });
+		}
 	}
+
+
 };

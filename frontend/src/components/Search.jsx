@@ -44,7 +44,7 @@ export default function SearchDoctor() {
     if (location.suburb) queryParams.append('area', location.suburb);
   }
   
-  navigate(`/results?${queryParams.toString()}`);
+      navigate(`/results?${queryParams.toString()}`);
 };
     
   const [error, setError] = useState("");
