@@ -31,7 +31,7 @@ const Results = () => {
         setLoading(true);
         setTimeout(() => {
             fetchDoctors();
-        }, 3000);
+        }, 1500);
   }, [specialty, doctorName, city, area, aiQuery]);
 
   const fetchDoctors = async () => {

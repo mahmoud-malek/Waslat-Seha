@@ -409,7 +409,7 @@ export default function PatientDashboard() {
 
                     {/* Navigation Tabs */}
                     <div className="flex gap-4 mb-6 overflow-x-auto">
-                        {['overview', 'appointments', 'medical history', 'prescriptions', 'settings'].map((tab) => (
+                        {['overview', 'appointments', 'medical history', 'settings'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}

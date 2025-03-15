@@ -28,7 +28,7 @@ const doctorData = {
       address: "45 El-Merghany Street, Heliopolis, Cairo",
       price: "350 EGP",
       availability: "Sat-Wed: 10:00 AM - 4:00 PM"
-    }
+      },
   ]
 };
 

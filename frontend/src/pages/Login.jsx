@@ -69,7 +69,7 @@ export default function SignInPage() {
                       type="text"
                       id="phone"
                       className="w-full px-4 py-2 mt-1 text-gray-900 bg-gray-200 rounded-full focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                      placeholder="Enter your phone number"
+                      placeholder="eg. 01012345678"
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
@@ -121,11 +121,51 @@ export default function SignInPage() {
                     </button>
                   </div>
                 </form>
-              </div>
+                              </div>
+                              
+
             </>
           )}
-        </div>
-      </div>
+        </  div>
+          </div>
+         
+          <section className="flex flex-col items-center justify-center">
+              <div>
+                  <h1>Sign in</h1>
+                  <p>Welcome, please sign in to continue</p>
+              </div>
+              
+
+              <div>
+                  <form className="flex flex-col">
+                      
+                      <div className='flex flex-col'>
+                          <label> phone number
+                          </label>
+
+                          <input id='phone'>
+                          </input>
+                      </div>
+
+                      <div>
+                          <label htmlFor='password'>password</label>
+                          <input id='password'>
+                          </input>
+                      </div>
+                  </form>
+              </div>
+
+          </section>
+
+
+
+
+
+
+
+
+
+
       <Footer />
     </>
   );
